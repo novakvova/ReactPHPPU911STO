@@ -21,12 +21,18 @@ const LoginPage: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmit(true);
-    LoginUser(state);
-    console.log("submit form", state);
-    setIsSubmit(false);
+    try {
+        setIsSubmit(true);
+        console.log("Login begin form");
+        await LoginUser(state);
+        console.log("submit form", state);
+        setIsSubmit(false);
+    }catch(ex) {
+        console.log("problem form");
+        setIsSubmit(false);
+    }
   };
 
   return (
