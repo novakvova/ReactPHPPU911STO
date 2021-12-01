@@ -1,11 +1,8 @@
 import { Dispatch } from "react"
-import {AuthAction, AuthActionTypes, ILoginResponse} from '../../types/auth';
+import {AuthAction, AuthActionTypes} from '../../types/auth';
 import http from '../../http_common';
+import {ILoginModel, ILoginResponse} from '../../components/auth/Login/types';
 
-interface ILoginModel {
-    email: string,
-    password: string
-}
 
 export const LoginUser = (data: ILoginModel) => {
     return async (dispatch: Dispatch<AuthAction>) => {
