@@ -1,7 +1,8 @@
 import { Dispatch } from "react"
 import {AuthAction, AuthActionTypes} from '../../types/auth';
 import http from '../../http_common';
-import {ILoginModel, ILoginResponse} from '../../components/auth/Login/types';
+import {ILoginModel, ILoginResponse, LoginServerError} from '../../components/auth/Login/types';
+import axios, { AxiosError } from "axios";
 
 
 export const LoginUser = (data: ILoginModel) => {
@@ -18,7 +19,14 @@ export const LoginUser = (data: ILoginModel) => {
         }
         catch(error) {
             //dispatch({type: AuthActionTypes.LOGIN_AUTH_ERROR, payload: "Error"});
-            console.log("End redux login problem");
+            if (axios.isAxiosError(error)) {
+                const serverError = error as AxiosError<LoginServerError>;
+                if (serverError && serverError.response) {
+                    return Promise.reject(serverError.response.data);
+                }
+            }
+            //console.log("End redux login problem");
+
             return Promise.reject(error);
         }
     }

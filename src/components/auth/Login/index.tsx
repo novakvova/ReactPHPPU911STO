@@ -1,8 +1,8 @@
 import { useState } from "react";
 import InputGroup from "../../common/InputGroup";
-import { ILoginModel } from "./types";
+import { ILoginModel, LoginServerError } from "./types";
 import { useActions } from "../../../hooks/useActions";
-import { useFormik, Form, FormikProvider } from 'formik';
+import { useFormik, Form, FormikProvider, FormikHelpers } from 'formik';
 import { validationFields } from './validation';
 
 const LoginPage: React.FC = () => {
@@ -11,32 +11,28 @@ const LoginPage: React.FC = () => {
 
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
 
-  const [state, setState] = useState<ILoginModel>({
-    email: "",
-    password: "",
-  });
-
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setState({
-  //     ...state,
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
   const initialValues: ILoginModel = { email: '', password: '' };
 
- // const handleSubmit = async (e: React.FormEvent) => {
-  const onHandleSubmit = async (values: ILoginModel) => {
-    //   e.preventDefault();
-    console.log("values submit: ", values);
-    return;
+  const onHandleSubmit = async (values: ILoginModel, 
+    {setFieldError} : FormikHelpers<ILoginModel>) => {
+
        try {
            setIsSubmit(true);
            console.log("Login begin form");
-           await LoginUser(state);
-           console.log("submit form", state);
+           await LoginUser(values);
+           console.log("submit form", values);
            setIsSubmit(false);
        }catch(ex) {
-           console.log("problem form");
+          const serverErrors = ex as LoginServerError;
+          if(serverErrors.password.length!=0)
+          {
+            console.log("problem ", serverErrors.password[0]);
+            //console.log("REF formik: ", refFormik.current);
+            //refFormik.current?.setFieldError("password", serverErrors.password[0]);
+            setFieldError("password", serverErrors.password[0]);
+          }
+           console.log("problem form", serverErrors);
+
            setIsSubmit(false);
        }
      };
@@ -48,7 +44,7 @@ const LoginPage: React.FC = () => {
     
 });
 
-const { errors, touched, handleChange, handleSubmit } = formik;
+const { errors, touched, handleChange, handleSubmit, setFieldError } = formik;
 
   return (
     <div className="row">
