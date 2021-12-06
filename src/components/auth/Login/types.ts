@@ -1,3 +1,7 @@
+export enum AuthActionTypes {
+    LOGIN = "LOGIN",
+}
+
 export interface ILoginModel {
     email: string,
     password: string
@@ -13,3 +17,22 @@ export type LoginServerError = {
     password: Array<string>, 
     error: string 
 };
+
+export interface IUser {
+    email: string,
+    image: string
+}
+
+export interface AuthState {
+    user: IUser,
+    isAuth: boolean,
+
+}
+
+export interface LoginAction {
+    type: AuthActionTypes.LOGIN,
+    payload: IUser
+}
+
+
+export type AuthAction = LoginAction ;

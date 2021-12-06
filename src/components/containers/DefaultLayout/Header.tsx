@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
+import {useTypedSelector} from '../../../hooks/useTypedSelector';
+
 const Header = () => {
+
+  const {isAuth, user} = useTypedSelector(state=>state.auth);
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
@@ -25,18 +29,33 @@ const Header = () => {
               </Link>
             </li>
           </ul>
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <Link className="nav-link" to="/register">
-                Реєстрація
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">
-                Вхід
-              </Link>
-            </li>
-          </ul>
+          {isAuth ? (
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <Link className="nav-link" to="/profile">
+                  {user.email}
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/logout">
+                  Вихід
+                </Link>
+              </li>
+            </ul>
+          ) : (
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <Link className="nav-link" to="/register">
+                  Реєстрація
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/login">
+                  Вхід
+                </Link>
+              </li>
+            </ul>
+          )}
         </div>
       </div>
     </nav>
