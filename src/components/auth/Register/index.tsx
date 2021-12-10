@@ -1,8 +1,8 @@
-import InputGroup from "../../common/InputGroup";
+//import InputGroup from "../../common/InputGroup";
 const RegisterPage = () => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.name, e.target.value);
-  };
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   console.log(e.target.name, e.target.value);
+  // };
   return (
     <div className="row">
       <div className="offset-md-3 col-md-6">

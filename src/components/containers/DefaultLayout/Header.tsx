@@ -28,6 +28,11 @@ const Header = () => {
                 Записати на сервіс
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/products/list">
+                Продукти
+              </Link>
+            </li>
           </ul>
           {isAuth ? (
             <ul className="navbar-nav">

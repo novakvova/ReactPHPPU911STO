@@ -8,7 +8,6 @@ import {
   AuthAction,
   AuthActionTypes,
   IUser,
-  LoginAction,
 } from "./types";
 import axios, { AxiosError } from "axios";
 

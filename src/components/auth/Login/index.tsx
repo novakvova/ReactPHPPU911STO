@@ -54,7 +54,7 @@ const LoginPage: React.FC = () => {
     onSubmit: onHandleSubmit,
   });
 
-  const { errors, touched, handleChange, handleSubmit, setFieldError } = formik;
+  const { errors, touched, handleChange, handleSubmit /*, setFieldError*/ } = formik;
 
   return (
     <div className="row">
