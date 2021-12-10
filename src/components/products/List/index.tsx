@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
-import http from "../../../http_common";
-import { IProductItem, IProductsModel } from "./types";
+import { useActions } from "../../../hooks/useActions";
+import { useTypedSelector } from "../../../hooks/useTypedSelector";
 
 const ProductsListPage: React.FC = () => {
-  const [state, setState] = useState<Array<IProductItem>>([]);
-
+  const [loading, setLoading] = useState<boolean>(false);
+  const { products } = useTypedSelector((store) => store.product);
+  const { fetchProducts } = useActions();
   useEffect(() => {
     async function getProducts() {
+      setLoading(true);
       try {
-        let response = await http.get<IProductsModel>("api/products");
-        const { data } = response.data;
-        setState(data);
+        await fetchProducts();
+        setLoading(false);
       } catch (ex) {
-        console.log("Problem fetch");
+        setLoading(false);
       }
     }
     getProducts();
@@ -21,6 +22,7 @@ const ProductsListPage: React.FC = () => {
   return (
     <>
       <h1 className="text-center">Товари на сайті</h1>
+      {loading && <h2>Loading ...</h2>}
       <table className="table">
         <thead>
           <tr>
@@ -30,7 +32,7 @@ const ProductsListPage: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {state.map((item) => {
+          {products.map((item) => {
             return (
               <tr key={item.id}>
                 <th scope="row">{item.id}</th>
@@ -38,7 +40,7 @@ const ProductsListPage: React.FC = () => {
                 <td>{item.detail}</td>
               </tr>
             );
-          })}         
+          })}
         </tbody>
       </table>
     </>
