@@ -13,10 +13,17 @@ export interface IProductsModel {
     success: boolean;
     message: string;
     data: Array<IProductItem>;
+    last_page: number;
+}
+
+export interface IProductSearch {
+    page?: null|number|string,
+    name?: null|string 
 }
 
 export interface ProductsState {
     products: Array<IProductItem>;
+    last_page: number
 }
 
 export enum ProductsActionTypes {
@@ -25,7 +32,7 @@ export enum ProductsActionTypes {
 
 export interface FetchProductsAction {
     type: ProductsActionTypes.FETCH_PRODUCTS,
-    payload: Array<IProductItem>
+    payload: ProductsState
 }
 
 export type ProductActions = FetchProductsAction;

@@ -1,7 +1,8 @@
 import {ProductActions, ProductsActionTypes, ProductsState} from './types';
 
 const initialState : ProductsState = {
-    products: []
+    products: [],
+    last_page: 0
 }
 
 export const ProductsReducer = (state = initialState, action: ProductActions) => {
@@ -10,7 +11,7 @@ export const ProductsReducer = (state = initialState, action: ProductActions) =>
         case ProductsActionTypes.FETCH_PRODUCTS:
             return {
                 ...state,
-                products: action.payload
+                ...action.payload
             };
         default:
             return state;
