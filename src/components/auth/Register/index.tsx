@@ -15,6 +15,22 @@ const RegisterPage = () => {
       keyboard: false,
     });
     bsModal.show();
+
+    const image = document.getElementById("image");
+    const cropper = new Cropper(image as any, {
+      aspectRatio: 16 / 9,
+      crop(event) {
+        console.log(event.detail.x);
+        console.log(event.detail.y);
+        console.log(event.detail.width);
+        console.log(event.detail.height);
+        console.log(event.detail.rotate);
+        console.log(event.detail.scaleX);
+        console.log(event.detail.scaleY);
+      },
+    });
+
+
   }
   return (
     <>
@@ -51,7 +67,6 @@ const RegisterPage = () => {
         </div>
       </div>
 
-
       <div className="modal" ref={modalRef} tabIndex={-1}>
         <div className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
           <div className="modal-content">
@@ -66,6 +81,10 @@ const RegisterPage = () => {
             </div>
             <div className="modal-body">
               <p>Modal body text goes here.</p>
+              <div>
+                <img id="image" 
+                  src="https://static.remove.bg/remove-bg-web/6c5ea334216f9ded64486efb0e2a4421757cbce5/assets/start_remove-c851bdf8d3127a24e2d137a55b1b427378cd17385b01aec6e59d5d4b5f39d2ec.png" />
+              </div>
             </div>
             <div className="modal-footer">
               <button

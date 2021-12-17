@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import "bootstrap/dist/js/bootstrap";
+import "cropperjs/dist/cropper.css";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
