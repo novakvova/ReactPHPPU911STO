@@ -1,4 +1,4 @@
-import {useRef} from 'react';
+import {useEffect, useRef} from 'react';
 import { Modal } from "bootstrap";
 import Cropper from 'cropperjs';
 
@@ -6,6 +6,10 @@ import Cropper from 'cropperjs';
 const RegisterPage = () => {
 
   const modalRef = useRef(null);
+  let cropper: Cropper;
+  // useEffect(() => {
+    
+  // }, []);
 
   const selectImage = () => {
     console.log("Select image");
@@ -17,20 +21,18 @@ const RegisterPage = () => {
     bsModal.show();
 
     const image = document.getElementById("image");
-    const cropper = new Cropper(image as any, {
-      aspectRatio: 16 / 9,
-      crop(event) {
-        console.log(event.detail.x);
-        console.log(event.detail.y);
-        console.log(event.detail.width);
-        console.log(event.detail.height);
-        console.log(event.detail.rotate);
-        console.log(event.detail.scaleX);
-        console.log(event.detail.scaleY);
-      },
-    });
-
-
+    cropper= new Cropper(image as any, {
+     aspectRatio: 16 / 9,
+     crop(event) {
+       console.log(event.detail.x);
+       console.log(event.detail.y);
+       console.log(event.detail.width);
+       console.log(event.detail.height);
+       console.log(event.detail.rotate);
+       console.log(event.detail.scaleX);
+       console.log(event.detail.scaleY);
+     },
+   });
   }
   return (
     <>
@@ -94,8 +96,10 @@ const RegisterPage = () => {
               >
                 Close
               </button>
-              <button type="button" className="btn btn-primary">
-                Save changes
+              <button type="button" className="btn btn-primary" onClick={()=>{
+                cropper.rotate(90);
+              }}>
+                rotate
               </button>
             </div>
           </div>
